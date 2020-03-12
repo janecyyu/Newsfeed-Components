@@ -113,7 +113,7 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
-function articleMaker(data) {
+function articleMaker(article) {
   //create elements
   const container = document.createElement("div");
   const title = document.createElement("h2");
@@ -121,7 +121,9 @@ function articleMaker(data) {
   const firstParagraph = document.createElement("p");
   const secondParagraph = document.createElement("p");
   const thirdParagraph = document.createElement("p");
+  const buttons = document.createElement("div");
   const expandButton = document.createElement("span");
+  const closeButton = document.createElement("span");
 
   //make orders
   container.append(title);
@@ -129,26 +131,91 @@ function articleMaker(data) {
   container.append(firstParagraph);
   container.append(secondParagraph);
   container.append(thirdParagraph);
-  container.append(expandButton);
+  container.append(thirdParagraph);
+  container.append(buttons);
+  buttons.append(expandButton);
+  buttons.append(closeButton);
 
   //give class name
   container.classList.add("article");
   date.classList.add("date");
   expandButton.classList.add("expandButton");
+  closeButton.classList.add("closeButton", "hide-btn");
 
   //give content
-  title.textContent = data.title;
-  date.textContent = data.date;
-  firstParagraph.textContent = data.firstParagraph;
-  secondParagraph.textContent = data.secondParagraph;
-  thirdParagraph.textContent = data.thirdParagraph;
-  expandButton.textContent = '\u2665';
-  
+  title.textContent = article.title;
+  date.textContent = article.date;
+  firstParagraph.textContent = article.firstParagraph;
+  secondParagraph.textContent = article.secondParagraph;
+  thirdParagraph.textContent = article.thirdParagraph;
+  expandButton.textContent = "\u2665";
+  closeButton.textContent = "close";
+
   //add event listener
-  expandButton.addEventListener("click", event => {
+  buttons.addEventListener("click", event => {
+    expandButton.classList.toggle("hide-btn");
+    closeButton.classList.toggle("hide-btn");
+    readBtn.classList.toggle("hide-btn");
     container.classList.toggle("article-open");
-  })
+  });
+
+  //close btn
+  const read = document.createElement("div");
+  const readBtn = document.createElement("span");
+
+  container.append(read);
+  read.append(readBtn);
+  readBtn.classList.add("readButton");
+  readBtn.textContent = "remove";
+
+  //remove if click
+  read.addEventListener("click", event => {
+    container.remove();
+  });
+
   return container;
 }
 const inArticle = document.querySelector(".articles");
 data.forEach(item => inArticle.append(articleMaker(item)));
+
+//create a form
+const formContainer = document.createElement("div");
+const addArticle = document.createElement("h2");
+const formTag = document.createElement("form");
+//form content:title
+const titleLabel = document.createElement("label");
+const inputTitle = document.createElement("input");
+//form content:date
+const dateLabel = document.createElement("label");
+const inputDate = document.createElement("input");
+//form content:firstP
+const firstPLabel = document.createElement("label");
+const inputFirstP = document.createElement("input");
+//form content:secondP
+const secondPLabel = document.createElement("label");
+const inputsecondP = document.createElement("input");
+//form content:thirdP
+const thirdPLabel = document.createElement("label");
+const inputThirdP = document.createElement("input");
+//form content:submit btn
+const submit = document.createElement('input');
+
+//order them
+formContainer.append(addArticle);
+formContainer.append(formTag);
+formTag.append(titleLabel);
+formTag.append(inputTitle);
+formTag.append(dateLabel);
+formTag.append(inputDate);
+formTag.append(firstPLabel);
+formTag.append(inputFirstP);
+formTag.append(secondPLabel);
+formTag.append(inputsecondP);
+formTag.append(thirdPLabel);
+formTag.append(inputThirdP);
+formTag.append(submit);
+
+//add text content
+addArticle.textContent ="Add a Article";
+
+console.log(formContainer);
